@@ -79,18 +79,42 @@ const [loadingChats, setLoadingChats] = useState(true);
     setSearchResult(result.data);
   }
 
-  async function handleAccessChat(userId) {
-    const result = await axios.post("http://localhost:8000/api/chat/", {userId}, {
+  // async function handleAccessChat(userId) {
+  //   const result = await axios.post("http://localhost:8000/api/chat/", {userId}, {
+  //     withCredentials: true,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   setCurrentChat(result.data);
+  //   setIsSidebarOpen(false); // Close the sidebar when chat opens
+  //   setSearchResult([]);
+  //   setSearchUser("");
+  // }
+
+
+async function handleAccessChat(userId) {
+  try {
+    const { data } = await axios.post("http://localhost:8000/api/chat/", {userId}, {
       withCredentials: true,
       headers: {
         "Content-Type": "application/json",
       },
     });
-    setCurrentChat(result.data);
-    setIsSidebarOpen(false); // Close the sidebar when chat opens
+    
+    // Add the new chat to the existing chats array
+    // setChats(prevChats => [...prevChats, data]);
+     setChats(prevChats => [data, ...prevChats]);
+    setCurrentChat(data);
+    setIsSidebarOpen(false);
     setSearchResult([]);
     setSearchUser("");
+  } catch (error) {
+    console.error('Error accessing chat:', error);
   }
+}
+
+
 
   return (
     <div className="app-container">
