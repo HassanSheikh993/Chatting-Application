@@ -69,7 +69,6 @@ io.on("connection",(socket)=>{
   })
 
   socket.on("new message",(data)=>{
-    console.log(data.content)
     const chat = data.chat;
     if (!chat || !chat._id) return;
     socket.to(chat._id).emit("message received", data);
@@ -78,6 +77,10 @@ io.on("connection",(socket)=>{
 
 
 
+  socket.on("update latest message", (newMessage) => {
+  socket.in(newMessage.chat._id).emit("latest message updated", newMessage);
+  socket.emit("latest message updated", newMessage); 
+});
   
 })
 
