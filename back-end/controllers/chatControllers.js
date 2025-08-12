@@ -2,7 +2,7 @@ import { Chat } from "../modles/chatsModel.js";
 import { User } from "../modles/userModel.js"
 export const accessChat = async (req, res) => {
     const { userId } = req.body;
-    console.log(userId)
+    
 
     if (!userId) {
         console.log("user id not send");
@@ -41,7 +41,7 @@ export const accessChat = async (req, res) => {
         try {
             const createdChat = await Chat.create(chatData);
             const fullChats = await Chat.find({ _id: createdChat._id }).populate("users", "-password");
-            console.log("CHAT: ",fullChats[0])
+           
             res.status(200).send(fullChats[0]);
         } catch (err) {
             console.log("Error in access chat in sending response ", err);
@@ -62,7 +62,7 @@ export const fetchChats = async (req, res) => {
             path: "latestMessage.sender",
             select: "name pic email"
         })
-        console.log(allChats)
+      
         res.status(200).json(allChats)
     } catch (err) {
         console.log("Error in allChats function ", err);
