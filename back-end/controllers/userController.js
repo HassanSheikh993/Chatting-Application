@@ -6,8 +6,7 @@ export const registerUser = async(req,res)=>{
    try{
      const { name, email, password, confirmPassword, pic } = req.body;
      const file = req.file;
-     console.log("body: ",req.body);
-     console.log("file: ",req.file);
+  
 
     if(!name || !email || !password || !confirmPassword){
       return res.status(400).json({message:"Incomplete Data"})
@@ -52,7 +51,7 @@ export const registerUser = async(req,res)=>{
 export const authUser = async(req,res)=>{
   try{
       const {email,password}  = req.body;
-      console.log("authUser: ",req.body)
+     
     if(!email || !password){
         return res.status(400).json({message:"Incomplete Data"})
     }
